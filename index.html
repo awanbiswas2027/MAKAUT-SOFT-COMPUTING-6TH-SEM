@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAKAUT Soft Computing Master Study Playlist</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <meta name="theme-color" content="#080c14">
     
     <!-- SEO Optimization -->
     <meta name="description" content="Complete, exam-ready YouTube study playlist mapping 100% of the MAKAUT PCCAIML603 & PCCAIML693 Soft Computing syllabus for Semester VI B.Tech CSE AI&ML.">
@@ -43,6 +45,9 @@
     --accent-hover: #1d4ed8;
     --text-color: #1f2937;
     --text-muted: #4b5563;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
     --primary-gradient: linear-gradient(135deg, #2563eb, #3b82f6);
     --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
 }
@@ -52,7 +57,13 @@
     margin: 0;
     padding: 0;
     font-family: 'Inter', system-ui, sans-serif;
-    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Theme transition only on elements that need it */
+body, .sidebar, .main-content, .dashboard-panel, .topic-card,
+.topic-header, .meta-box, .nav-item, .theme-toggle-btn,
+.recommended-card, .search-input, .modal-content {
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 body {
@@ -164,6 +175,44 @@ body {
     color: var(--text-color);
     background: rgba(255, 255, 255, 0.05);
     border-color: var(--border-color);
+}
+
+button.nav-item {
+    background: none;
+    font-size: inherit;
+    text-align: left;
+    width: 100%;
+}
+
+.nav-item:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Skip navigation link */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 9999;
+    padding: 1rem;
+    background: var(--accent-color);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 0 0 0.5rem 0;
+}
+
+.skip-link:focus {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    overflow: visible;
 }
 
 .nav-item.active {
@@ -567,13 +616,20 @@ body {
 
 .modal-close {
     position: absolute;
-    top: -2.5rem;
-    right: 0;
-    background: none;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0,0,0,0.5);
     border: none;
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
 
 .iframe-container {
@@ -600,11 +656,87 @@ body {
     .topic-body { display: block !important; }
 }
 
+/* Table scroll wrapper for responsive tables */
+.table-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+/* Mobile hamburger menu button */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+}
+
+/* Revision sub-tab buttons */
+.revision-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    font-size: inherit;
+    transition: all 0.2s;
+}
+
+.revision-tab-btn.active {
+    background: var(--primary-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+.revision-tab-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
-    .app-container { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border-color); }
-    .main-content { margin-left: 0; padding: 1.5rem; }
+    .mobile-menu-toggle { display: block; }
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        position: fixed;
+        height: 100vh;
+        width: 280px;
+        z-index: 150;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+    .main-content { margin-left: 0; padding: 1.5rem; padding-top: 4rem; }
     .panel-header { flex-direction: column; align-items: stretch; }
     .search-container { width: 100%; }
 }
@@ -612,6 +744,12 @@ body {
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="mobile-menu-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+    
     <div class="background-glow">
         <div class="glow-orb orb-1"></div>
         <div class="glow-orb orb-2"></div>
@@ -621,20 +759,20 @@ body {
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="logo-section">
-                <h2>MAKAUT SOFT COMPUTING</h2>
-                <p>Course: PCCAIML603 & PCCAIML693</p>
-                <p>B.Tech Semester VI (AI & ML)</p>
+                <div class="logo-title" style="font-size: 1.3rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MAKAUT SOFT COMPUTING</div>
+                <p>Course: PCCAIML603 &amp; PCCAIML693</p>
+                <p>B.Tech Semester VI (AI &amp; ML)</p>
             </div>
             
-            <nav class="nav-menu">
-                <div class="nav-item active" onclick="switchTab('screen-syllabus', this)"><i class="fa-solid fa-book-open"></i> Syllabus Dashboard</div>
-                <div class="nav-item" onclick="switchTab('screen-prereq', this)"><i class="fa-solid fa-graduation-cap"></i> Prerequisites</div>
-                <div class="nav-item" onclick="switchTab('screen-fast-track', this)"><i class="fa-solid fa-bolt"></i> 80/20 Fast-Track</div>
-                <div class="nav-item" onclick="switchTab('screen-revision', this)"><i class="fa-solid fa-calendar-days"></i> Revision Planners</div>
-                <div class="nav-item" onclick="switchTab('screen-labs', this)"><i class="fa-solid fa-flask"></i> Practical & Viva Lab</div>
-                <div class="nav-item" onclick="switchTab('screen-pyq', this)"><i class="fa-solid fa-clipboard-question"></i> PYQ Map & Weightage</div>
-                <div class="nav-item" onclick="switchTab('screen-rankings', this)"><i class="fa-solid fa-ranking-star"></i> Ranked Videos</div>
-                <div class="nav-item" onclick="switchTab('screen-audit', this)"><i class="fa-solid fa-circle-check"></i> Coverage Audit</div>
+            <nav class="nav-menu" role="tablist">
+                <button class="nav-item active" onclick="switchTab('screen-syllabus', this)" role="tab" aria-selected="true"><i class="fa-solid fa-book-open"></i> Syllabus Dashboard</button>
+                <button class="nav-item" onclick="switchTab('screen-prereq', this)" role="tab" aria-selected="false"><i class="fa-solid fa-graduation-cap"></i> Prerequisites</button>
+                <button class="nav-item" onclick="switchTab('screen-fast-track', this)" role="tab" aria-selected="false"><i class="fa-solid fa-bolt"></i> 80/20 Fast-Track</button>
+                <button class="nav-item" onclick="switchTab('screen-revision', this)" role="tab" aria-selected="false"><i class="fa-solid fa-calendar-days"></i> Revision Planners</button>
+                <button class="nav-item" onclick="switchTab('screen-labs', this)" role="tab" aria-selected="false"><i class="fa-solid fa-flask"></i> Practical &amp; Viva Lab</button>
+                <button class="nav-item" onclick="switchTab('screen-pyq', this)" role="tab" aria-selected="false"><i class="fa-solid fa-clipboard-question"></i> PYQ Map &amp; Weightage</button>
+                <button class="nav-item" onclick="switchTab('screen-rankings', this)" role="tab" aria-selected="false"><i class="fa-solid fa-ranking-star"></i> Ranked Videos</button>
+                <button class="nav-item" onclick="switchTab('screen-audit', this)" role="tab" aria-selected="false"><i class="fa-solid fa-circle-check"></i> Coverage Audit</button>
             </nav>
             
             <button class="theme-toggle-btn" onclick="toggleTheme()">
@@ -643,7 +781,7 @@ body {
         </aside>
         
         <!-- Main Content Panel -->
-        <main class="main-content">
+        <main class="main-content" id="main-content">
             <!-- Header Panel Card -->
             <div class="dashboard-panel">
                 <div class="panel-header">
@@ -666,7 +804,7 @@ body {
                 <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
                     <div class="search-container">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" id="search-input" class="search-input" placeholder="Search topics, channels or keywords..." oninput="triggerSearch()">
+                        <input type="text" id="search-input" class="search-input" placeholder="Search topics, channels or keywords..." aria-label="Search topics, channels or keywords" oninput="triggerSearch()">
                     </div>
                     <div style="font-size: 0.9rem; color: var(--text-muted);">
                         <i class="fa-solid fa-info-circle"></i> Click topics to expand notes, details, and alternative video options.
@@ -739,8 +877,8 @@ body {
             <!-- Screen 4: Revision Planners -->
             <section id="screen-revision" class="tab-screen">
                 <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
-                    <button class="theme-toggle-btn active" id="btn-week-planner" onclick="toggleRevisionSubTab('week')"><i class="fa-solid fa-calendar-week"></i> One-Week revision</button>
-                    <button class="theme-toggle-btn" id="btn-day-planner" onclick="toggleRevisionSubTab('day')"><i class="fa-solid fa-clock"></i> One-Day crash revision</button>
+                    <button class="revision-tab-btn active" id="btn-week-planner" onclick="toggleRevisionSubTab('week')"><i class="fa-solid fa-calendar-week"></i> One-Week revision</button>
+                    <button class="revision-tab-btn" id="btn-day-planner" onclick="toggleRevisionSubTab('day')"><i class="fa-solid fa-clock"></i> One-Day crash revision</button>
                 </div>
                 
                 <!-- Sub Tab: One-Week -->
@@ -874,9 +1012,9 @@ body {
     <!-- Floating Video Modal Player -->
     <div id="video-modal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Close video player">&times;</button>
             <div class="iframe-container">
-                <iframe id="video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe id="video-iframe" src="" title="Video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -4524,6 +4662,13 @@ body {
         
         // Load initial elements
         document.addEventListener("DOMContentLoaded", () => {
+            // Restore saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark-theme');
+                document.documentElement.classList.add('light-theme');
+            }
+            
             renderSyllabus();
             renderPrerequisites();
             renderFastTrack();
@@ -4537,20 +4682,36 @@ body {
         
         // Tab switching logic
         function switchTab(screenId, element) {
+            // Reset search on tab switch
+            const searchInput = document.getElementById('search-input');
+            if (searchInput && searchInput.value) {
+                searchInput.value = '';
+                triggerSearch();
+            }
+            
             // Hide all tab screens
             document.querySelectorAll('.tab-screen').forEach(screen => {
                 screen.classList.remove('active');
             });
             
-            // Show select screen
-            document.getElementById(screenId).classList.add('active');
+            // Show selected screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) targetScreen.classList.add('active');
             
-            // Toggle active sidebar item
+            // Toggle active sidebar item + ARIA
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
+                item.setAttribute('aria-selected', 'false');
             });
             element.classList.add('active');
+            element.setAttribute('aria-selected', 'true');
             window.scrollTo(0, 0);
+            
+            // Auto-close mobile menu on tab selection
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
         }
         
         // Dark/Light Theme Toggle
@@ -4559,9 +4720,11 @@ body {
             if (html.classList.contains('light-theme')) {
                 html.classList.remove('light-theme');
                 html.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
             } else {
                 html.classList.remove('dark-theme');
                 html.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
             }
         }
         
@@ -4571,13 +4734,15 @@ body {
             const current = localStorage.getItem(key) === 'true';
             localStorage.setItem(key, !current);
             
-            // Update checkbox state visually
+            // Update checkbox state visually + ARIA
             const checkboxes = document.querySelectorAll(`[data-progress-id="${id}"]`);
             checkboxes.forEach(cb => {
                 if (!current) {
                     cb.classList.add('checked');
+                    cb.setAttribute('aria-checked', 'true');
                 } else {
                     cb.classList.remove('checked');
+                    cb.setAttribute('aria-checked', 'false');
                 }
             });
             
@@ -4640,19 +4805,22 @@ body {
         function extractVideoId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
-            return (match && match[2].length == 11) ? match[2] : null;
+            return (match && match[2].length === 11) ? match[2] : null;
         }
         
         // Expand/Collapse accordion items
         function toggleAccordion(elementId) {
             const body = document.getElementById(elementId);
+            if (!body) return;
             body.classList.toggle('active');
             
-            const icon = body.previousElementSibling.querySelector('.accordion-chevron i');
-            if (body.classList.contains('active')) {
-                icon.className = 'fa-solid fa-chevron-up';
-            } else {
-                icon.className = 'fa-solid fa-chevron-down';
+            const header = body.previousElementSibling;
+            const isExpanded = body.classList.contains('active');
+            if (header) header.setAttribute('aria-expanded', isExpanded);
+            
+            const icon = header?.querySelector('.accordion-chevron i');
+            if (icon) {
+                icon.className = isExpanded ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down';
             }
         }
         
@@ -4713,9 +4881,9 @@ body {
                     
                     html += `
                     <div class="topic-card" data-search-term="${topic.topic.toLowerCase()} ${topic.channel.toLowerCase()} ${altTopic ? altTopic.channel.toLowerCase() : ''}">
-                        <div class="topic-header" onclick="toggleAccordion('body-${baseId}')">
+                        <div class="topic-header" onclick="toggleAccordion('body-${baseId}')" role="button" tabindex="0" aria-expanded="false" aria-controls="body-${baseId}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion('body-${baseId}')}">
                             <div class="topic-title-area">
-                                <div class="topic-checkbox" data-progress-id="${baseId}" onclick="event.stopPropagation(); toggleProgress('${baseId}')"></div>
+                                <div class="topic-checkbox" data-progress-id="${baseId}" role="checkbox" aria-checked="false" tabindex="0" onclick="event.stopPropagation(); toggleProgress('${baseId}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleProgress('${baseId}')}"></div>
                                 <span class="topic-name">${topic.topic}</span>
                                 <span class="topic-badge ${badgeClass}">${badgeText}</span>
                             </div>
@@ -4729,6 +4897,7 @@ body {
                                 <p><strong><i class="fa-solid fa-award"></i> Exam Relevance:</strong> ${topic.examRelevance}</p>
                                 <p><strong><i class="fa-solid fa-clock"></i> Estimated Study Time:</strong> ${topic.studyTime} Hours</p>
                             </div>
+                            <div class="table-scroll-wrapper">
                             <table class="video-table">
                                 <thead>
                                     <tr>
@@ -4749,7 +4918,7 @@ body {
                                         <td><strong>${topic.channel}</strong></td>
                                         <td>${topic.duration}</td>
                                         <td>${topic.language}</td>
-                                        <td><a href="${topic.url}" target="_blank" class="yt-link"><i class="fa-brands fa-youtube"></i> Watch Video</a></td>
+                                        <td><a href="#" onclick="event.preventDefault(); playVideo('${topic.url}')" class="yt-link"><i class="fa-solid fa-play"></i> Play</a> <a href="${topic.url}" target="_blank" rel="noopener noreferrer" class="yt-link" style="font-size:0.8rem;"><i class="fa-solid fa-external-link-alt"></i></a></td>
                                         <td>${topic.scores.beginner}/10 | ${topic.scores.exam}/10 | ${topic.scores.practical}/10 | ${topic.scores.clarity}/10</td>
                                         <td class="score-cell">${topic.total_score}/40</td>
                                     </tr>
@@ -4760,13 +4929,14 @@ body {
                                         <td><strong>${altTopic.channel}</strong></td>
                                         <td>${altTopic.duration}</td>
                                         <td>${altTopic.language}</td>
-                                        <td><a href="${altTopic.url}" target="_blank" class="yt-link"><i class="fa-brands fa-youtube"></i> Watch Video</a></td>
+                                        <td><a href="#" onclick="event.preventDefault(); playVideo('${altTopic.url}')" class="yt-link"><i class="fa-solid fa-play"></i> Play</a> <a href="${altTopic.url}" target="_blank" rel="noopener noreferrer" class="yt-link" style="font-size:0.8rem;"><i class="fa-solid fa-external-link-alt"></i></a></td>
                                         <td>${altTopic.scores.beginner}/10 | ${altTopic.scores.exam}/10 | ${altTopic.scores.practical}/10 | ${altTopic.scores.clarity}/10</td>
                                         <td class="score-cell">${altTopic.total_score}/40</td>
                                     </tr>
                                     ` : ''}
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                     `;
@@ -4786,9 +4956,9 @@ body {
                 
                 html += `
                 <div class="topic-card" data-search-term="${topic.topic.toLowerCase()}">
-                    <div class="topic-header" onclick="toggleAccordion('body-${baseId}')">
+                    <div class="topic-header" onclick="toggleAccordion('body-${baseId}')" role="button" tabindex="0" aria-expanded="false" aria-controls="body-${baseId}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion('body-${baseId}')}">
                         <div class="topic-title-area">
-                            <div class="topic-checkbox" data-progress-id="${baseId}" onclick="event.stopPropagation(); toggleProgress('${baseId}')"></div>
+                            <div class="topic-checkbox" data-progress-id="${baseId}" role="checkbox" aria-checked="false" tabindex="0" onclick="event.stopPropagation(); toggleProgress('${baseId}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleProgress('${baseId}')}"></div>
                             <span class="topic-name">${topic.topic}</span>
                         </div>
                         <div class="accordion-chevron">
@@ -4801,6 +4971,7 @@ body {
                             <p><strong>Study Value:</strong> ${topic.examRelevance}</p>
                             <p><strong>Estimated Study Time:</strong> ${topic.studyTime} Hours</p>
                         </div>
+                        <div class="table-scroll-wrapper">
                         <table class="video-table">
                             <thead>
                                 <tr>
@@ -4820,7 +4991,7 @@ body {
                                     <td><strong>${topic.channel}</strong></td>
                                     <td>${topic.duration}</td>
                                     <td>${topic.language}</td>
-                                    <td><a href="${topic.url}" target="_blank" class="yt-link"><i class="fa-brands fa-youtube"></i> Watch</a></td>
+                                    <td><a href="#" onclick="event.preventDefault(); playVideo('${topic.url}')" class="yt-link"><i class="fa-solid fa-play"></i> Play</a> <a href="${topic.url}" target="_blank" rel="noopener noreferrer" class="yt-link" style="font-size:0.8rem;"><i class="fa-solid fa-external-link-alt"></i></a></td>
                                     <td class="score-cell">${topic.total_score}/40</td>
                                 </tr>
                                 ${altTopic ? `
@@ -4830,12 +5001,13 @@ body {
                                     <td><strong>${altTopic.channel}</strong></td>
                                     <td>${altTopic.duration}</td>
                                     <td>${altTopic.language}</td>
-                                    <td><a href="${altTopic.url}" target="_blank" class="yt-link"><i class="fa-brands fa-youtube"></i> Watch</a></td>
+                                    <td><a href="#" onclick="event.preventDefault(); playVideo('${altTopic.url}')" class="yt-link"><i class="fa-solid fa-play"></i> Play</a> <a href="${altTopic.url}" target="_blank" rel="noopener noreferrer" class="yt-link" style="font-size:0.8rem;"><i class="fa-solid fa-external-link-alt"></i></a></td>
                                     <td class="score-cell">${altTopic.total_score}/40</td>
                                 </tr>
                                 ` : ''}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
                 `;
@@ -4849,6 +5021,7 @@ body {
                                   "u3_neuron_model", "u3_perceptron", "u3_multi_layer", "u4_selection", "u4_crossover", "u5_pso"];
             
             let html = `
+            <div class="table-scroll-wrapper">
             <table class="video-table">
                 <thead>
                     <tr>
@@ -4869,7 +5042,7 @@ body {
                     <tr>
                         <td><strong>${video.topic}</strong></td>
                         <td><span style="color: var(--warning-color); font-weight: 600;">${video.examRelevance}</span></td>
-                        <td><a href="${video.url}" target="_blank" class="yt-link">${video.title}</a></td>
+                        <td><a href="#" onclick="event.preventDefault(); playVideo('${video.url}')" class="yt-link">${video.title}</a> <a href="${video.url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-solid fa-external-link-alt"></i></a></td>
                         <td><strong>${video.channel}</strong></td>
                         <td>${video.duration}</td>
                         <td class="score-cell" style="color: var(--success-color);">${video.total_score}/40</td>
@@ -4880,7 +5053,8 @@ body {
             
             html += `
                 </tbody>
-            </table>`;
+            </table>
+            </div>`;
             
             document.getElementById('fast-track-content').innerHTML = html;
         }
@@ -4912,7 +5086,7 @@ body {
                         weekHtml += `
                         <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0;">
                             <span><i class="fa-regular fa-circle-play" style="color: var(--accent-color);"></i> ${video.topic} - <em>${video.title}</em> (<strong>${video.channel}</strong>)</span>
-                            <a href="${video.url}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Play</a>
+                            <a href="#" onclick="event.preventDefault(); playVideo('${video.url}')" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Play</a>
                         </li>
                         `;
                     }
@@ -4925,6 +5099,7 @@ body {
             
             const dayCrashIds = ["u2_prop_fuzzy_relations", "u2_defuzzification_methods", "u3_neuron_model", "u3_multi_layer", "u4_selection", "u4_crossover", "u5_pso"];
             let dayHtml = `
+            <div class="table-scroll-wrapper">
             <table class="video-table">
                 <thead>
                     <tr>
@@ -4943,19 +5118,20 @@ body {
                     <tr>
                         <td><strong>${video.topic}</strong></td>
                         <td><em>${video.title}</em></td>
-                        <td><a href="${video.url}" target="_blank" class="yt-link"><i class="fa-brands fa-youtube"></i> Play Crash</a></td>
+                        <td><a href="#" onclick="event.preventDefault(); playVideo('${video.url}')" class="yt-link"><i class="fa-solid fa-play"></i> Play Crash</a></td>
                         <td>${video.duration}</td>
                     </tr>
                     `;
                 }
             });
             
-            dayHtml += `</tbody></table>`;
+            dayHtml += `</tbody></table></div>`;
             document.getElementById('day-revision-content').innerHTML = dayHtml;
         }
         
         function renderLabs() {
             let html = `
+            <div class="table-scroll-wrapper">
             <table class="video-table">
                 <thead>
                     <tr>
@@ -4972,13 +5148,13 @@ body {
                 <tr>
                     <td><strong>${lab.topic}</strong><br><small style="color: var(--text-muted);">Language: ${lab.codeLanguage}</small></td>
                     <td>${lab.whyLearn}</td>
-                    <td><a href="${lab.best.url}" target="_blank" class="yt-link"><i class="fa-solid fa-code"></i> ${lab.best.title}</a><br><small>(${lab.best.channel} - ${lab.best.duration})</small></td>
-                    <td><a href="${lab.viva.url}" target="_blank" class="yt-link" style="color: var(--warning-color);"><i class="fa-regular fa-question-circle"></i> ${lab.viva.title}</a><br><small>(${lab.viva.channel} - ${lab.viva.duration})</small></td>
+                    <td><a href="#" onclick="event.preventDefault(); playVideo('${lab.best.url}')" class="yt-link"><i class="fa-solid fa-code"></i> ${lab.best.title}</a><br><small>(${lab.best.channel} - ${lab.best.duration})</small></td>
+                    <td><a href="#" onclick="event.preventDefault(); playVideo('${lab.viva.url}')" class="yt-link" style="color: var(--warning-color);"><i class="fa-regular fa-question-circle"></i> ${lab.viva.title}</a><br><small>(${lab.viva.channel} - ${lab.viva.duration})</small></td>
                 </tr>
                 `;
             });
             
-            html += `</tbody></table>`;
+            html += `</tbody></table></div>`;
             document.getElementById('labs-content').innerHTML = html;
         }
         
@@ -5031,7 +5207,7 @@ body {
                     </div>
                     <div style="margin: 0.75rem 0;">
                         <div style="font-size: 0.8rem; color: var(--text-muted);">Video Title:</div>
-                        <div style="font-weight: 600; font-size: 0.9rem; line-height: 1.4; color: var(--text-color); margin-bottom: 0.5rem; height: 40px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${v.title}</div>
+                        <div style="font-weight: 600; font-size: 0.9rem; line-height: 1.4; color: var(--text-color); margin-bottom: 0.5rem; height: 40px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;" title="${v.title}">${v.title}</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
                             <span>Duration: ${v.duration}</span>
                             <span>Lang: ${v.language}</span>
@@ -5042,7 +5218,7 @@ body {
                             <div style="font-size: 0.75rem; color: var(--text-muted);">Quality Rating</div>
                             <div class="card-score" style="margin-bottom: 0; font-size: 1.5rem;">${v.total_score}/40</div>
                         </div>
-                        <a href="${v.url}" target="_blank" class="play-btn" style="width: auto; padding: 0.5rem 0.85rem;"><i class="fa-solid fa-circle-play"></i> Watch Now</a>
+                        <a href="#" onclick="event.preventDefault(); playVideo('${v.url}')" class="play-btn" style="width: auto; padding: 0.5rem 0.85rem;"><i class="fa-solid fa-circle-play"></i> Watch Now</a>
                     </div>
                 </div>
                 `;
@@ -5083,33 +5259,65 @@ body {
                     <td><span style="color: var(--success-color); font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Covered</span></td>
                     <td>${item.best_title}</td>
                     <td><strong>${item.best_channel}</strong></td>
-                    <td><a href="${item.best_url}" target="_blank" class="yt-link">Audit Link</a></td>
+                    <td><a href="#" onclick="event.preventDefault(); playVideo('${item.best_url}')" class="yt-link">Audit Link</a> <a href="${item.best_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;"><i class="fa-solid fa-external-link-alt"></i></a></td>
                 </tr>
                 `;
             });
             document.getElementById('audit-table-content').innerHTML = html;
         }
         
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+        
         function triggerSearch() {
             const query = document.getElementById('search-input').value.toLowerCase();
             
-            const cards = document.querySelectorAll('#syllabus-content .topic-card');
-            cards.forEach(card => {
+            // Filter topic cards in Syllabus and Prerequisites
+            const allTopicCards = document.querySelectorAll('.topic-card');
+            allTopicCards.forEach(card => {
                 const term = card.getAttribute('data-search-term');
-                if (term && term.includes(query)) {
-                    card.style.display = 'block';
+                if (!query || (term && term.includes(query))) {
+                    card.style.display = '';
                 } else {
                     card.style.display = 'none';
                 }
             });
             
-            const prereqs = document.querySelectorAll('#prereq-content .topic-card');
-            prereqs.forEach(card => {
-                const term = card.getAttribute('data-search-term');
-                if (term && term.includes(query)) {
-                    card.style.display = 'block';
+            // Filter ranked video cards
+            const rankedCards = document.querySelectorAll('.recommended-card');
+            rankedCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (!query || text.includes(query)) {
+                    card.style.display = '';
                 } else {
                     card.style.display = 'none';
+                }
+            });
+            
+            // Filter video-table rows in Labs, Fast-Track, Audit
+            const tableRows = document.querySelectorAll('.video-table tbody tr, .schedule-table tbody tr');
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (!query || text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // Filter PYQ list items
+            const pyqItems = document.querySelectorAll('#pyq-list-content > div');
+            pyqItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (!query || text.includes(query)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
                 }
             });
         }
