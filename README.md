@@ -54,7 +54,7 @@ This portal maps **100% of the MAKAUT syllabus** for:
 
 ## 📂 Directory Index
 
-*   `soft_computing_makaut_youtube_master_playlist.html` — Main SPA code containing all styling, logic, layouts, and curated video database.
+*   `index.html` — Main SPA code containing all styling, logic, layouts, and curated video database.
 *   `link_audit_report.md` — Link health report documenting automated verification of all reference links (100% availability verification).
 *   `README.md` — Main project documentation.
 
@@ -64,5 +64,5 @@ This portal maps **100% of the MAKAUT syllabus** for:
 
 Since the application is built entirely as a standalone frontend SPA:
 1.  Clone this repository or download the files.
-2.  Simply double-click `soft_computing_makaut_youtube_master_playlist.html` or drag it into any modern web browser (Chrome, Edge, Firefox, Safari).
+2.  Simply double-click `index.html` or drag it into any modern web browser (Chrome, Edge, Firefox, Safari).
 3.  No local server, node modules, or database configurations are required!
