@@ -1,0 +1,12 @@
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE/Editor config
+.vscode/
+.idea/
+*.suo
+*.user
+*.workspace
