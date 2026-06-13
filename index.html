@@ -4801,9 +4801,18 @@ button.nav-item {
             document.getElementById('video-modal').style.display = 'none';
             document.getElementById('video-iframe').src = '';
         }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('video-modal');
+                if (modal && modal.style.display === 'flex') {
+                    closeModal();
+                }
+            }
+        });
         
         function extractVideoId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : null;
         }
@@ -4816,7 +4825,7 @@ button.nav-item {
             
             const header = body.previousElementSibling;
             const isExpanded = body.classList.contains('active');
-            if (header) header.setAttribute('aria-expanded', isExpanded);
+            if (header) header.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
             
             const icon = header?.querySelector('.accordion-chevron i');
             if (icon) {
@@ -4851,7 +4860,7 @@ button.nav-item {
             
             let html = "";
             unitsList.forEach(unit => {
-                const unitId = unit.split(":")[0].replace(/^\s+|\s+$/g, '').replace(" ", "").toLowerCase();
+                const unitId = unit.split(":")[0].trim().replaceAll(" ", "").toLowerCase();
                 const unitTopics = videoDatabase.filter(v => v.unit === unitId && v.type === 'best');
                 
                 html += `<h2 class="unit-section-title">${unit}</h2>`;
@@ -5270,8 +5279,8 @@ button.nav-item {
         function toggleMobileMenu() {
             const sidebar = document.querySelector('.sidebar');
             const overlay = document.getElementById('mobile-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
+            if (sidebar) sidebar.classList.toggle('open');
+            if (overlay) overlay.classList.toggle('active');
         }
         
         function triggerSearch() {
